@@ -1,0 +1,6 @@
+{
+  "develop": {
+    "PORT": 3000,
+    "UI_DIR": "../ui/out"
+  }
+}
