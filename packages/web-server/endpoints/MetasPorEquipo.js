@@ -1,55 +1,55 @@
 const express = require('express');
 const router = express.Router();
-const MetasEquipo = require('../models/MetasEquipo');
-const {ManejarError} = require('../utils/ManejadorErrores');
+const TeamGoals = require('../models/TeamGoals');
+const {HandleError} = require('../utils/ErrorHandler');
 
-router.get('/metas_equipo', async (req, res) => {
+router.get('/team-goals', async (req, res) => {
   try {
-    const metas_equipos = await MetasEquipo.obtenerTodas();
-    res.status(200).send(metas_equipos);
+    const teamsGoals = await TeamGoals.getAll();
+    res.status(200).send(teamsGoals);
   } catch (e) {
-    ManejarError(e, res);
+    HandleError(e, res);
   }
 });
 
-router.get('/metas_equipo/:equipo', async (req, res) => {
-  const equipo = req.params.equipo;
+router.get('/team-goals/:team', async (req, res) => {
+  const team = req.params.team;
   try {
-    const metas_equipo = await MetasEquipo.obtenerPorEquipo(equipo);
-    res.status(200).send(metas_equipo);
+    const teamGoals = await TeamGoals.getByTeam(team);
+    res.status(200).send(teamGoals);
   } catch (e) {
-    ManejarError(e, res);
+    HandleError(e, res);
   }
 });
   
-router.post('/metas_equipo', async (req, res) => {
-  const datos = req.body;
+router.post('/team-goals', async (req, res) => {
+  const data = req.body;
   try {
-    const metas_equipo = await MetasEquipo.guardar(datos);
-    res.status(200).send(metas_equipo);
+    const teamGoals = await TeamGoals.save(data);
+    res.status(200).send(teamGoals);
   } catch (e) {
-    ManejarError(e, res);
+    HandleError(e, res);
   }
 });
 
-router.put('/metas_equipo/:equipo', async (req, res) => {
-  const metasNuevas = req.body;
-  const equipo = req.params.equipo;
+router.put('/team-goals/:team', async (req, res) => {
+  const newGoals = req.body;
+  const team = req.params.team;
   try {
-    const nuevas_metas_equipo = await MetasEquipo.actualizar(equipo, metasNuevas);
-    res.status(200).send(nuevas_metas_equipo);
+    const newTeamGoals = await TeamGoals.update(team, newGoals);
+    res.status(200).send(newTeamGoals);
   } catch (e) {
-    ManejarError(e, res);
+    HandleError(e, res);
   }
 });
 
-router.delete('/metas_equipo/:equipo', async (req, res) => {
-  const equipo = req.params.equipo;
+router.delete('/team-goals/:team', async (req, res) => {
+  const team = req.params.team;
   try {
-    await MetasEquipo.eliminar(equipo);
+    await TeamGoals.delete(team);
     res.status(200).send();
   } catch (e) {
-    ManejarError(e, res);
+    HandleError(e, res);
   }
 });
 
