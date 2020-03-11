@@ -7,18 +7,24 @@ const app = express();
 const port = process.env.PORT;
 
 // Express Middleware ------------------------------------------------------------------
+// Parse all payloads as JSON objects
 app.use(bodyParser.json());
+// Log any income request
+app.use((req, res, next) => {
+  console.info(`${new Date()} - ${req.method} ${req.originalUrl}`);
+  next();
+})
 
 // Rutas  Middleware -------------------------------------------------------------------
 
-// Servir artefactos UI de manera estatica en el root para poder acceder como: "http://localhost/index.html"
+// Serve UI Artifacts in the root of Express so that it can be accessed as: "http://localhost/index.html"
 app.use('/', express.static(process.env.UI_DIR));
 
 // Habilitar router para Metas por Equipo
-const RouterMetasEquipo = require('./endpoints/MetasPorEquipo');
-app.use('/_api/v1', RouterMetasEquipo);
+const TeamGoalsRouter = require('./endpoints/TeamGoals');
+app.use('/_api/v1', TeamGoalsRouter);
 
 
 
 
-app.listen(port, () => console.log(`La aplicación express inicio en el puerto: ${port}`));
+app.listen(port, () => console.log(`Application started at port: ${port}`));
