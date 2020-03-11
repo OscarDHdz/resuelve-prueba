@@ -9,7 +9,7 @@ const ERROR_CODES = {
   },
   409: {
     code: 409,
-    message: 'Conflicto - an element with the given id already exists'
+    message: 'Conflict - an element with the given id already exists'
   }
 }
 
