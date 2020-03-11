@@ -9,6 +9,13 @@ const TeamGoals = ({ team, goals }) => {
   });
 
   const validate = () => {
+    if (typeof team !== 'string' || team.length < 1) return false;
+    if (!Array.isArray(goals)) return false;
+
+    for (const goal of goals) {
+      if (typeof goal.nivel !== 'string' || goal.nivel.length < 1) return false;
+      if (typeof goal.goles_minimos !== 'number' ) return false;
+    }
     return true;
   }
 
