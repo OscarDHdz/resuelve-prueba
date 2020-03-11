@@ -21,7 +21,7 @@ const TeamGoals = ({ team, goals }) => {
 
 const getAllTeamsGoals = () => {
   try {
-    const teams_goals = fs.readFileSync('db/teams_goals.json');
+    const teams_goals = fs.readFileSync(process.env.LOCAL_DB_FILE);
     return JSON.parse(teams_goals);
   }
   catch ( e ) {
@@ -36,9 +36,6 @@ TeamGoals.save = (data) => {
     return Promise.reject(ERROR_CODES[400]);
   }
 
-  
-  console.log( JSON.stringify(teamGoals.getInfo(), undefined, 2 ))
-
   const teamsGoals = getAllTeamsGoals();
   const existingRecord = teamsGoals.find(teamG => teamG.team === teamGoals.getInfo().team);
 
@@ -50,7 +47,7 @@ TeamGoals.save = (data) => {
 
 
   return new Promise((resolve) => {
-    fs.writeFile('db/teams_goals.json', JSON.stringify(teamsGoals), () => {
+    fs.writeFile(process.env.LOCAL_DB_FILE, JSON.stringify(teamsGoals), () => {
       resolve(teamGoals.getInfo());
     });
   });
@@ -68,7 +65,7 @@ TeamGoals.delete = (team) => {
   const filteredTeamsGoals = teamsGoals.filter(teamG => teamG.team !== team);
 
   return new Promise((resolve) => {
-    fs.writeFile('db/teams_goals.json', JSON.stringify(filteredTeamsGoals), () => {
+    fs.writeFile(process.env.LOCAL_DB_FILE, JSON.stringify(filteredTeamsGoals), () => {
       resolve();
     });
   });
@@ -92,7 +89,7 @@ TeamGoals.update = (team, newGoals) => {
   existingRecord.goals = newTeamGoals.getInfo().goals;
 
   return new Promise((resolve) => {
-    fs.writeFile('db/teams_goals.json', JSON.stringify(teamsGoals), () => {
+    fs.writeFile(process.env.LOCAL_DB_FILE, JSON.stringify(teamsGoals), () => {
       resolve(newTeamGoals.getInfo());
     });
   });
