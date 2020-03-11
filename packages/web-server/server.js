@@ -15,8 +15,10 @@ app.use(bodyParser.json());
 app.use('/', express.static(process.env.UI_DIR));
 
 // Habilitar router para Metas por Equipo
-const RouterMetas = require('./routes/Metas');
-app.use('/_api/v1', RouterMetas);
+const RouterMetasEquipo = require('./endpoints/MetasPorEquipo');
+app.use('/_api/v1', RouterMetasEquipo);
+
+
 
 
 app.listen(port, () => console.log(`La aplicación express inicio en el puerto: ${port}`));
