@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const MetasEquipo = require('../models/MetasEquipo');
-const _ = require('lodash');
+const {ManejarError} = require('../utils/ManejadorErrores');
 
 router.get('/metas_equipo', async (req, res) => {
   try {
     const metas_equipos = await MetasEquipo.obtenerTodas();
     res.status(200).send(metas_equipos);
   } catch (e) {
-    res.status(400).send({error: e});
+    ManejarError(e, res);
   }
 });
 
@@ -18,7 +18,7 @@ router.get('/metas_equipo/:equipo', async (req, res) => {
     const metas_equipo = await MetasEquipo.obtenerPorEquipo(equipo);
     res.status(200).send(metas_equipo);
   } catch (e) {
-    res.status(400).send({error: e});
+    ManejarError(e, res);
   }
 });
   
@@ -28,7 +28,7 @@ router.post('/metas_equipo', async (req, res) => {
     const metas_equipo = await MetasEquipo.guardar(datos);
     res.status(200).send(metas_equipo);
   } catch (e) {
-    res.status(400).send({error: e});
+    ManejarError(e, res);
   }
 });
 
@@ -39,7 +39,7 @@ router.put('/metas_equipo/:equipo', async (req, res) => {
     const nuevas_metas_equipo = await MetasEquipo.actualizar(equipo, metasNuevas);
     res.status(200).send(nuevas_metas_equipo);
   } catch (e) {
-    res.status(400).send({error: e});
+    ManejarError(e, res);
   }
 });
 
@@ -49,7 +49,7 @@ router.delete('/metas_equipo/:equipo', async (req, res) => {
     await MetasEquipo.eliminar(equipo);
     res.status(200).send();
   } catch (e) {
-    res.status(400).send({error: e});
+    ManejarError(e, res);
   }
 });
 
