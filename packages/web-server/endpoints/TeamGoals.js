@@ -53,6 +53,16 @@ router.delete('/team-goals/:team', async (req, res) => {
   }
 });
 
+router.post('/team-goals/batch', async (req, res) => {
+  const data = req.body;
+  try {
+    const result = await TeamGoals.saveBatch(data);
+    res.status(200).send(result);
+  } catch (e) {
+    HandleError(e, res);
+  }
+});
+
 
 
 module.exports = router;

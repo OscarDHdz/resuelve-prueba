@@ -36,7 +36,24 @@ const getAllTeamsGoals = () => {
   }
 };
 
-TeamGoals.save = (data) => {
+TeamGoals.getByTeam = async (team) => {
+
+  const teamsGoals = getAllTeamsGoals();
+  const existingRecord = teamsGoals.find(teamG => teamG.equipo === team);
+
+  if (!existingRecord) {
+    return Promise.reject(ERROR_CODES[404]);
+  }
+
+  return Promise.resolve(existingRecord);
+}
+
+TeamGoals.getAll = async () => {
+  const teamsGoals = getAllTeamsGoals();
+  return Promise.resolve(teamsGoals);
+}
+
+TeamGoals.save = async (data) => {
 
   const teamGoals = TeamGoals(data);
   if (!teamGoals.validate()) {
@@ -60,7 +77,7 @@ TeamGoals.save = (data) => {
   });
 }
 
-TeamGoals.delete = (team) => {
+TeamGoals.delete = async (team) => {
 
   const teamsGoals = getAllTeamsGoals();
 
@@ -79,7 +96,7 @@ TeamGoals.delete = (team) => {
 
 }
 
-TeamGoals.update = (team, newGoals) => {
+TeamGoals.update = async (team, newGoals) => {
 
   const newTeamGoals = TeamGoals({equipo: team, metas: newGoals});
   if (!newTeamGoals.validate()) {
@@ -102,21 +119,34 @@ TeamGoals.update = (team, newGoals) => {
   });
 }
 
-TeamGoals.getByTeam = (team) => {
-
-  const teamsGoals = getAllTeamsGoals();
-  const existingRecord = teamsGoals.find(teamG => teamG.equipo === team);
-
-  if (!existingRecord) {
-    return Promise.reject(ERROR_CODES[404]);
+TeamGoals.saveBatch = async (teamsGoals) => {
+  if (!Array.isArray(teamsGoals)) {
+    return Promise.reject(ERROR_CODES[400]);
   }
 
-  return Promise.resolve(existingRecord);
-}
+  // Validate that every team goals input is correct
+  for (const tGoals of teamsGoals) {
+    if (!TeamGoals(tGoals).validate()) {
+      return Promise.reject(ERROR_CODES[400]);
+    }
+  }
+  // Start adding each team goals. If one of them has a conflict, skip and save a reference
+  const failedToAdd = [];
+  for (const tGoals of teamsGoals) {
+    try {
+      await TeamGoals.save(tGoals);
+    } catch(e) {
+      failedToAdd.push({data: tGoals, error: e});
+    }
+  }
 
-TeamGoals.getAll = () => {
-  const teamsGoals = getAllTeamsGoals();
-  return Promise.resolve(teamsGoals);
+  // If any add failed, return to the user which elements failed
+  if (failedToAdd.length === 0) {
+    return Promise.resolve();
+  } else {
+    return Promise.resolve({failedToAdd})
+  }
+
 }
 
 
