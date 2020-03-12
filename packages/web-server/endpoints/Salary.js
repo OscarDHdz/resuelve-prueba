@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const TeamGoals = require('../models/TeamGoals');
+const Salary = require('../models/Salary');
 const {HandleError} = require('../utils/ErrorHandler');
 
-router.post('/salary', async (req, res) => {
+router.post('/salary/team', async (req, res) => {
+  const data = req.body;
   try {
-    res.status(500).send('Missing implementation');
+
+    const teamsData = await Salary(data).calculateSalaries();
+
+
+
+    res.status(200).send(teamsData);
   } catch (e) {
     HandleError(e, res);
   }
