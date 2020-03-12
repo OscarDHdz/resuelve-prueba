@@ -25,6 +25,10 @@ router.get('/team-goals/:team', async (req, res) => {
 router.post('/team-goals', async (req, res) => {
   const data = req.body;
   try {
+    const validation = TeamGoals(data).validate();
+    if (!validation.valid) {
+      return HandleError({code: 400, message: validation.message}, res);
+    }
     const teamGoals = await TeamGoals.save(data);
     res.status(200).send(teamGoals);
   } catch (e) {
@@ -36,6 +40,12 @@ router.put('/team-goals/:team', async (req, res) => {
   const newGoals = req.body;
   const team = req.params.team;
   try {
+    
+    const validation = TeamGoals({equipo: team, metas: newGoals}).validate();
+    if (!validation.valid) {
+      return HandleError({code: 400, message: validation.message}, res);
+    }
+
     const newTeamGoals = await TeamGoals.update(team, newGoals);
     res.status(200).send(newTeamGoals);
   } catch (e) {

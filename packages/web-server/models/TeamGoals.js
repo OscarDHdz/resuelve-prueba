@@ -1,5 +1,6 @@
 const fs = require('fs');
 const {ERROR_CODES} = require('../utils/ErrorHandler');
+const v = require('../utils/Validators');
 
 const TeamGoals = ({ equipo, metas }) => {
 
@@ -9,14 +10,22 @@ const TeamGoals = ({ equipo, metas }) => {
   });
 
   const validate = () => {
-    if (typeof equipo !== 'string' || equipo.length < 1) return false;
-    if (!Array.isArray(metas)) return false;
+    if (!v.isDefined(equipo)) return v.getIsNotDefinedError('equipo');
+    if (!v.isString(equipo)) return v.getIsNotStringError('equipo');
+    if (!v.hasMinLength(1, equipo)) return v.getHasNotMinLengthError('equipo', 1);
 
+    
+    if (!v.isDefined(metas)) return v.getIsNotDefinedError('metas');
+    if (!Array.isArray(metas)) return v.getIsNotArrayError('metas');
     for (const meta of metas) {
-      if (typeof meta.nivel !== 'string' || meta.nivel.length < 1) return false;
-      if (typeof meta.goles_minimos !== 'number' ) return false;
+      
+      if (!v.isDefined(meta.nivel)) return v.getIsNotDefinedError('meta.nivel');
+      if (!v.isString(meta.nivel)) return v.getIsNotStringError('meta.nivel');
+
+      if (!v.isDefined(meta.goles_minimos)) return v.getIsNotDefinedError('meta.goles_minimos');
+      if (!v.isNumber(meta.goles_minimos)) return v.getIsNotNumberError('meta.goles_minimos');
     }
-    return true;
+    return v.SUCCESS;
   }
 
   return {
@@ -35,6 +44,7 @@ const getAllTeamsGoals = () => {
     return [];
   }
 };
+
 
 TeamGoals.getByTeam = async (team) => {
 
@@ -56,9 +66,6 @@ TeamGoals.getAll = async () => {
 TeamGoals.save = async (data) => {
 
   const teamGoals = TeamGoals(data);
-  if (!teamGoals.validate()) {
-    return Promise.reject(ERROR_CODES[400]);
-  }
 
   const teamsGoals = getAllTeamsGoals();
   const existingRecord = teamsGoals.find(teamG => teamG.equipo === teamGoals.getInfo().equipo);
@@ -99,9 +106,6 @@ TeamGoals.delete = async (team) => {
 TeamGoals.update = async (team, newGoals) => {
 
   const newTeamGoals = TeamGoals({equipo: team, metas: newGoals});
-  if (!newTeamGoals.validate()) {
-    return Promise.reject(ERROR_CODES[400]);
-  }
 
   const teamsGoals = getAllTeamsGoals();
   const existingRecord = teamsGoals.find(teamG => teamG.equipo === newTeamGoals.getInfo().equipo);
@@ -120,14 +124,11 @@ TeamGoals.update = async (team, newGoals) => {
 }
 
 TeamGoals.saveBatch = async (teamsGoals) => {
-  if (!Array.isArray(teamsGoals)) {
-    return Promise.reject(ERROR_CODES[400]);
-  }
-
   // Validate that every team goals input is correct
   for (const tGoals of teamsGoals) {
-    if (!TeamGoals(tGoals).validate()) {
-      return Promise.reject(ERROR_CODES[400]);
+    const validation = TeamGoals(tGoals).validate();
+    if (!validation.valid) {
+      return Promise.reject({code: 400, message: validation.message});
     }
   }
   // Start adding each team goals. If one of them has a conflict, skip and save a reference
