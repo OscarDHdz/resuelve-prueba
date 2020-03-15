@@ -19,6 +19,8 @@
     "nodemon": "^2.0.2"
   },
   "nodemonConfig": {
-    "ignore": ["db/**"]
+    "ignore": [
+      "db/**"
+    ]
   }
 }

@@ -1,16 +1,11 @@
-const env = process.env.NODE_ENV || 'develop';
+const path = require('path');
+const LOCAL_DB_PATH = path.join(__dirname, '../db');
 
-/**
- * If NODE_ENV is set to 'test' or 'develop' we bind process.env with all values set in config.json. 
- * else, we just pick the ones that are currently set externaly in the environment.
- * 
- */
-if (env === 'test' || env === 'develop'){
-  var config = require('./config.json');
-  var envConfig = config[env];
-
-  Object.keys(envConfig).forEach((key) => {
-    process.env[key] = envConfig[key];
-  });
-
+module.exports = {
+  develop: {
+    PORT: 3000,
+    UI_DIR: path.join(__dirname, '../../', 'ui/out'),
+    LOCAL_DB_PATH,
+    LOCAL_DB_FILE: path.join(LOCAL_DB_PATH, 'team_goals.json')
+  }
 }

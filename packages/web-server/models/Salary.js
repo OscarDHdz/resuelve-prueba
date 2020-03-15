@@ -1,5 +1,4 @@
 const v = require('../utils/Validators');
-const TeamGoals = require('./TeamGoals');
 
 const Salary = jugadores => {
 

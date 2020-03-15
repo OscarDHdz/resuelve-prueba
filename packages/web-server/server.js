@@ -1,5 +1,5 @@
 // Load base configuration (process.env bindings)
-require('./config/config');
+require('./config/configHandler');
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();

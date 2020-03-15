@@ -1,7 +1,0 @@
-{
-  "develop": {
-    "PORT": 3000,
-    "UI_DIR": "../ui/out",
-    "LOCAL_DB_FILE": "db/team_goals.json"
-  }
-}
