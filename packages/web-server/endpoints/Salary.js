@@ -3,7 +3,7 @@ const router = express.Router();
 const Salary = require('../models/Salary');
 const {HandleError} = require('../utils/ErrorHandler');
 
-router.post('/salary/team', async (req, res) => {
+router.post('/salary', async (req, res) => {
   const data = req.body;
   try {
 

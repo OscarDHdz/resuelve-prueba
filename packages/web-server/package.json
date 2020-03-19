@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon --exec npm run start"
+    "dev": "export NODE_ENV=develop || SET \"NODE_ENV=develop\" && nodemon --exec npm run start"
   },
   "keywords": [],
   "author": "",
