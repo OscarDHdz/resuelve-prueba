@@ -3,6 +3,9 @@ const router = express.Router();
 const TeamGoals = require('../models/TeamGoals');
 const {HandleError} = require('../utils/ErrorHandler');
 
+/**
+ * Fetch all team goals
+ */
 router.get('/team-goals', async (req, res) => {
   try {
     const teamsGoals = await TeamGoals.getAll();
@@ -12,6 +15,9 @@ router.get('/team-goals', async (req, res) => {
   }
 });
 
+/**
+ * Fecth the given team goals
+ */
 router.get('/team-goals/:team', async (req, res) => {
   const team = req.params.team;
   try {
@@ -21,7 +27,10 @@ router.get('/team-goals/:team', async (req, res) => {
     HandleError(e, res);
   }
 });
-  
+
+/**
+ * Add team goals
+ */
 router.post('/team-goals', async (req, res) => {
   const data = req.body;
   try {
@@ -36,6 +45,9 @@ router.post('/team-goals', async (req, res) => {
   }
 });
 
+/**
+ * Update team goals by team name
+ */
 router.put('/team-goals/:team', async (req, res) => {
   const newGoals = req.body;
   const team = req.params.team;
@@ -53,6 +65,9 @@ router.put('/team-goals/:team', async (req, res) => {
   }
 });
 
+/**
+ * Delete the given team goals
+ */
 router.delete('/team-goals/:team', async (req, res) => {
   const team = req.params.team;
   try {
@@ -63,6 +78,9 @@ router.delete('/team-goals/:team', async (req, res) => {
   }
 });
 
+/**
+ * Add multiple team goals
+ */
 router.post('/team-goals/batch', async (req, res) => {
   const data = req.body;
   try {
