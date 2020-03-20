@@ -3,7 +3,8 @@
 # datos locales
 db/**
 
-
+#test
+coverage/
 
 # dependencies
 /node_modules

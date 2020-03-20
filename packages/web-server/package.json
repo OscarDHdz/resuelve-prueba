@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "export NODE_ENV=develop || SET \"NODE_ENV=develop\" && nodemon --exec npm run start"
+    "dev": "export NODE_ENV=develop || SET \"NODE_ENV=develop\" && nodemon --exec npm run start",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2"
   },
   "nodemonConfig": {

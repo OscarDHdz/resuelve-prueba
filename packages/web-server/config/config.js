@@ -7,5 +7,12 @@ module.exports = {
     UI_DIR: path.join(__dirname, '../../', 'ui/out'),
     LOCAL_DB_PATH,
     LOCAL_DB_FILE: path.join(LOCAL_DB_PATH, 'team_goals.json')
+  },
+
+  test: {
+    PORT: 3000,
+    UI_DIR: path.join(__dirname, '../../', 'ui/out'),
+    LOCAL_DB_PATH,
+    LOCAL_DB_FILE: path.join(LOCAL_DB_PATH, 'team_goals_test.json')
   }
 }
