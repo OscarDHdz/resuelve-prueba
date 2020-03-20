@@ -25,7 +25,7 @@ const ERROR_CODES = {
  * @param {*} res - Express response objec
  */
 const HandleError = (error, res) => {
-  if (error.code && error.message) {
+  if (error && error.code && error.message) {
     res.status(error.code).send(error);
   } else {
     console.error(error);
