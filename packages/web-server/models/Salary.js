@@ -126,7 +126,7 @@ const Salary = players => {
       // Push all players into single array (Expected Output)
       allPlayers = [...allPlayers, ...teamSalaries];
     }
-    return teamData;
+    return allPlayers;
   }
 
 
