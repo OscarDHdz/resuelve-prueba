@@ -1,5 +1,5 @@
-const router = require('../endpoints/TeamGoals');
-const model = require('../models/TeamGoals');
+const router = require('../../endpoints/TeamGoals');
+const model = require('../../models/TeamGoals');
 jest.mock('fs');
 
 const mockTeamGoals = {

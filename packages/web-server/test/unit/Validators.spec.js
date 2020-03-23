@@ -1,4 +1,4 @@
-const v = require('../utils/Validators');
+const v = require('../../utils/Validators');
 
 describe('Validators', () => {
 

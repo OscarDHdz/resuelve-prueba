@@ -1,4 +1,4 @@
-const {ERROR_CODES, HandleError} = require('../utils/ErrorHandler');
+const {ERROR_CODES, HandleError} = require('../../utils/ErrorHandler');
 
 describe('Error Handler', () => {
   it('should validate that all ERROR_CODES include a code & message', () => {

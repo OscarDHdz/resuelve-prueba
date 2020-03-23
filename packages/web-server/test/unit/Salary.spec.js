@@ -1,7 +1,7 @@
-const router = require('../endpoints/Salary');
-const model = require('../models/Salary');
+const router = require('../../endpoints/Salary');
+const model = require('../../models/Salary');
 
-jest.mock('../models/TeamGoals');
+jest.mock('../../models/TeamGoals');
 
 const mockPlayers = [  
   {  
@@ -140,7 +140,7 @@ describe('Salary', () => {
     });
 
     it('should calculate players salaries', async() => {
-      require('../models/TeamGoals').getByTeam.mockReturnValue(
+      require('../../models/TeamGoals').getByTeam.mockReturnValue(
         {
           equipo: "rojo",
           metas: [
@@ -158,7 +158,7 @@ describe('Salary', () => {
     });
 
     it('salaries calculation should fail if goal for level is missing', async () => {
-      require('../models/TeamGoals').getByTeam.mockReturnValue(
+      require('../../models/TeamGoals').getByTeam.mockReturnValue(
         {
           equipo: "rojo",
           metas: [
@@ -178,7 +178,7 @@ describe('Salary', () => {
     });
 
     it('salaries calculation should fail if player team goals are missing', async () => {
-      require('../models/TeamGoals').getByTeam.mockReturnValue(
+      require('../../models/TeamGoals').getByTeam.mockReturnValue(
         {
           equipo: "azul", // Other team
           metas: [
