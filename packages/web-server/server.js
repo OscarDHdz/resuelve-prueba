@@ -32,6 +32,6 @@ const SalaryRouter = require('./endpoints/Salary');
 app.use('/_api/v1', SalaryRouter);
 
 
-app.listen(port, () => console.log(`Application started at port: ${port}`));
+const server = app.listen(port, () => console.log(`Application started at port: ${port}`));
 
-module.exports = app;
+module.exports = {app, server};
