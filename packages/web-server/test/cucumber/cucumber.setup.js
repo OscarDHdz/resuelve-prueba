@@ -2,9 +2,9 @@ const { Before } = require("cucumber");
 require('../../config/configHandler');
 const fs = require('fs');
 
-Before(() => {
+Before(function(scenario) {
+  console.info(`\n# Scenario: ${scenario.pickle.name}:`);
   // Cleaning up test db to avoid http 409 codes
-  console.info(`Cleaning up test 'db' file...`);
   try {
     fs.unlinkSync(process.env.LOCAL_DB_FILE);
   } catch (err) {
