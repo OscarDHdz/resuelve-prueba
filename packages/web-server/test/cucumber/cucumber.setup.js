@@ -1,4 +1,4 @@
-const { Before } = require("cucumber");
+const { Before, AfterAll } = require("cucumber");
 require('../../config/configHandler');
 const fs = require('fs');
 
@@ -11,4 +11,11 @@ Before(function(scenario) {
     if (err.code !== 'ENOENT') throw err;
   }
   
+});
+
+/**
+ * Stop cucumber-js execution
+ */
+AfterAll(function() {
+  process.exit();
 });
