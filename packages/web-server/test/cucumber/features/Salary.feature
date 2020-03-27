@@ -23,3 +23,18 @@ Feature: Players Salary Calculation
     And "Pedro" from "rojo" team total salary should be 70750
     And "Martin" from "rojo" team total salary should be 75333.33
     And "Luis" from "rojo" team total salary should be 59550
+
+  Scenario: Salary calculation fails as team goals are not set
+    Given player with data "{\"nombre\":\"Juan\",\"nivel\":\"A\",\"goles\":6,\"sueldo\":50000,\"bono\":25000,\"sueldo_completo\":null,\"equipo\":\"azul\"}"
+    When players salary is calculated
+    Then response status code should be 404
+  
+  Scenario: Salary calculation fails as level goals are not set
+    Given player with data "{\"nombre\":\"Juan\",\"nivel\":\"Z\",\"goles\":6,\"sueldo\":50000,\"bono\":25000,\"sueldo_completo\":null,\"equipo\":\"rojo\"}"
+    When players salary is calculated
+    Then response status code should be 404
+
+  Scenario: Salary calculation fails player is missing an attributes (goles)
+    Given player with data "{\"nombre\":\"Juan\",\"nivel\":\"A\",\"sueldo\":50000,\"bono\":25000,\"sueldo_completo\":null,\"equipo\":\"rojo\"}"
+    When players salary is calculated
+    Then response status code should be 400
