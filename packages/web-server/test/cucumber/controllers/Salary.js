@@ -40,12 +40,10 @@ const mockPlayers = [
   }
 ]
 
-const calculatePlayersSalaries = async () => {
-
+const calculatePlayersSalaries = async (playersData) => {
   const res = await request(api)
     .post('/_api/v1/salary')
-    .send(mockPlayers);
-
+    .send(playersData);
   return res;
 }
 
