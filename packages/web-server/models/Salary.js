@@ -99,7 +99,7 @@ const Salary = players => {
       const avgPercentage = (teamGoalPercentage + playerPercentage) / 2;
 
       // Calculate player total salary
-      player.sueldo_completo = player.sueldo + (player.bono * avgPercentage);
+      player.sueldo_completo = Math.round( (player.sueldo + (player.bono * avgPercentage)) * 100 ) / 100;
     }
 
     return players;
