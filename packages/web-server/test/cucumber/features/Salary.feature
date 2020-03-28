@@ -1,6 +1,6 @@
 Feature: Players Salary Calculation
   As an user of the Resuelve Salary Calculation App
-  I want to to know the total salary of some team players
+  I want to know the total salary of some team players
 
   Background: Team Goals are set
     Given level "A" with minimun goals 5
@@ -8,7 +8,7 @@ Feature: Players Salary Calculation
     And level "C" with minimun goals 15
     And level "Cuauh" with minimun goals 20
     When goals are set for team "rojo"
-    And "rojo" team goals for team are saved
+    And "rojo" team goals are saved
     Then response status code should be 200
 
   Scenario: Calculate Player Total Salary
