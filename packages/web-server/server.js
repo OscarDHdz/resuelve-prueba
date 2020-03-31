@@ -3,7 +3,6 @@ require('./config/configHandler');
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
-
 const port = process.env.PORT;
 
 // -------------------------------------------------------------------------------------
@@ -15,19 +14,19 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   console.info(`${new Date()} - ${req.method} ${req.originalUrl}`);
   next();
-})
-
+});
 
 // -------------------------------------------------------------------------------------
-// Rutas  Middleware -------------------------------------------------------------------
+// Routes  -----------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------
 // Serve UI Artifacts in the root of Express so that it can be accessed as: "http://localhost/index.html"
 app.use('/', express.static(process.env.UI_DIR));
 
-// Enable Team Goals Endpoints (To set team goals)
+// Enable Team Goals Endpoints (To set team goals) - [Barear Token]
 const TeamGoalsRouter = require('./endpoints/TeamGoals');
 app.use('/_api/v1', TeamGoalsRouter);
-// Enable Salary Router (Calculate players salaries)
+
+// Enable Salary Router (Calculate players salaries) - [Barear Token]
 const SalaryRouter = require('./endpoints/Salary');
 app.use('/_api/v1', SalaryRouter);
 

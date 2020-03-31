@@ -9,6 +9,10 @@ const ERROR_CODES = {
     code: 400,
     message: 'Bad Input'
   },
+  403: {
+    code: 403,
+    message: 'Authorization required'
+  },
   404: {
     code: 404,
     message: 'Element not found'
