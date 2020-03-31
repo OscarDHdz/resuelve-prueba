@@ -6,7 +6,7 @@ const checkAuth = (req, res, next, user) => {
   let decoded = null;
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.user === user) next();
+    if (decoded.user === user) return next();
     else return HandleError(ERROR_CODES[403], res);
   } catch (e) {
     return HandleError(ERROR_CODES[403], res);
