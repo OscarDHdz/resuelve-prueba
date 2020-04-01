@@ -8,5 +8,8 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY packages/web-server ./
 
+# Delete files not for production
+RUN rm -rf sandbox && rm -rf test
+
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+ENTRYPOINT [ "node server.js" ]
