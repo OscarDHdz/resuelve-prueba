@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from 'react';
 
-const RawJsonInput = () => {
+const RawJsonInput = ({handleDataChange}) => {
+  handleDataChange = handleDataChange || (() => {})
 
   const [jsonRawVal, setJsonRawVal] = useState("");
   const [isSyntaxValid, setIsSyntaxValid] = useState(true); // Needed for textare
@@ -11,6 +12,7 @@ const RawJsonInput = () => {
       const obj = JSON.parse(json);
       setIsSyntaxValid(true);
       setIsJSONValid(true);
+      handleDataChange(obj);
       return true;
     } catch (error) {
       setIsSyntaxValid(false);
@@ -24,7 +26,6 @@ const RawJsonInput = () => {
       const obj = JSON.parse(jsonRawVal);
       const beautified = JSON.stringify(obj, undefined, 2);
       setJsonRawVal(beautified);
-
     }
   }
 
@@ -51,11 +52,11 @@ const RawJsonInput = () => {
       </div>
       
       <div className="buttons">
-        <button className={`button is-primary`} disabled={!isJSONValid}>Submit</button>
         <button 
           className="button is-light"
           onClick={() => beautifyRawJson()}
           >Beautify</button>
+        <button className={`button is-primary`} disabled={!isJSONValid}>Submit</button>
       </div>
     </Fragment>
 

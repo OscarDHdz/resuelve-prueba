@@ -6,10 +6,6 @@ import RawJsonInput from '../components/RawJsonInput';
 const Home = () => {
 
   const [activeTab, setActiveTab] = useState(1);
-  const tabs = [
-    {label: 'Beauty', component: <h1>Hello Beauty!</h1>},
-    {label: 'Raw', component: <RawJsonInput/>}
-  ];
 
   const handleTabChange = (tabIndex) => {
     setActiveTab(tabIndex);
@@ -18,6 +14,15 @@ const Home = () => {
   const getCurrentInputComponent = () => {
     return tabs[activeTab].component;
   }
+
+  const handleDataChange = (playersData) => {
+    console.log(playersData);
+  }
+
+  const tabs = [
+    {label: 'Beauty', component: <h1>Hello Beauty!</h1>},
+    {label: 'Raw', component: <RawJsonInput handleDataChange={handleDataChange}/>}
+  ];
 
   return (
     <Layout>
