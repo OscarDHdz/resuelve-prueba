@@ -7,12 +7,16 @@ const Home = () => {
 
   const [activeTab, setActiveTab] = useState(1);
   const tabs = [
-    {label: 'Beauty'},
-    {label: 'Raw'}
+    {label: 'Beauty', component: <h1>Hello Beauty!</h1>},
+    {label: 'Raw', component: <RawJsonInput/>}
   ];
 
   const handleTabChange = (tabIndex) => {
     setActiveTab(tabIndex);
+  }
+
+  const getCurrentInputComponent = () => {
+    return tabs[activeTab].component;
   }
 
   return (
@@ -26,11 +30,9 @@ const Home = () => {
           initialTab={1}
           />
         {/* Component From Tab */}
-        <RawJsonInput/>
-
-
-
-
+        {
+          getCurrentInputComponent()
+        }
 
       </div>
     </Layout>
