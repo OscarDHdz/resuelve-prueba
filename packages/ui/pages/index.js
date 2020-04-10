@@ -20,6 +20,7 @@ const Home = () => {
   }
 
   const handleDataChange = (data) => {
+    console.log('Final players Data:', data);
     setPlayersData(data);
   }
 

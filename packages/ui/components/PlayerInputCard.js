@@ -37,37 +37,37 @@ const PlayerInputCard = ({index, data, handleCardFormChange, handleCardDelete}) 
   const validateForm = () => {
     let isFormValid = true;
 
-    if (name === '') {
+    if (!name) {
       setNameError(true);
       isFormValid = false;
     }
     else setNameError(null);
     
-    if (team === '') {
+    if (!team) {
       setTeamError(true);
       isFormValid = false;
     }
     else setTeamError(null);
 
-    if (salary === '') { 
+    if (!salary) { 
       setSalaryError(true);
       isFormValid = false;
     }
     else setSalaryError(null);
 
-    if (bonus === '') {
+    if (!bonus) {
       setBonusError(true);
       isFormValid = false;
     }
     else setBonusError(null);
 
-    if (level === '') {
+    if (!level) {
       setLevelError(true);
       isFormValid = false;
     }
     else setLevelError(null);
     
-    if (goals === '') {
+    if (!goals) {
       setGoalsError(true);
       isFormValid = false;
     }
