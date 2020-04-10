@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 import Tabs from '../components/Tabs';
 import React, { useState } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
-import PlayerCards from '../components/PlayerCards';
+import PlayerCards from '../components/PlayerInputCards';
 
 const Home = () => {
 

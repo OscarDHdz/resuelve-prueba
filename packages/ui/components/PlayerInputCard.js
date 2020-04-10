@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 const styles = {
+  card: {
+    marginBottom: '14px',
+  },
   deleteBtn: {
     position: 'absolute',
     bottom: 0,
@@ -9,30 +12,26 @@ const styles = {
   }
 }
 
-const PlayerInputCard = ({index, handleCardFormChange}) => {
-
-
-  handleCardFormChange = handleCardFormChange || (() => {});
-
-  const [name, setName] = useState('');
+const PlayerInputCard = ({index, data, handleCardFormChange, handleCardDelete}) => {
+  const [uuid] = useState(data ? data.uuid : '');
+  const [name, setName] = useState(data ? data.name : '');
   const [nameError, setNameError] = useState(null);
   const [nameDirty, setNameDirty] = useState(false);
-  const [team, setTeam] = useState('');
+  const [team, setTeam] = useState(data ? data.team : '');
   const [teamError, setTeamError] = useState(null);
   const [teamDirty, setTeamDirty] = useState(false);
-  const [salary, setSalary] = useState('');
+  const [salary, setSalary] = useState(data ? data.salary : '');
   const [salaryError, setSalaryError] = useState(null);
   const [salaryDirty, setSalaryDirty] = useState(false);
-  const [bonus, setBonus] = useState('');
+  const [bonus, setBonus] = useState(data ? data.bonus : '');
   const [bonusError, setBonusError] = useState(null);
   const [bonusDirty, setBonusDirty] = useState(false);
-  const [level, setLevel] = useState('');
+  const [level, setLevel] = useState(data ? data.level : '');
   const [levelError, setLevelError] = useState(null);
   const [levelDirty, setLevelDirty] = useState(false);
-  const [goals, setGoals] = useState('');
+  const [goals, setGoals] = useState(data ? data.goals : '');
   const [goalsError, setGoalsError] = useState(null);
   const [goalsDirty, setGoalsDirty] = useState(false);
-  const [formValid, setFormValid] = useState(false);
 
   const validateForm = () => {
     let isFormValid = true;
@@ -72,31 +71,24 @@ const PlayerInputCard = ({index, handleCardFormChange}) => {
       isFormValid = false;
     }
     else setGoalsError(null);
-
-    setFormValid(isFormValid);
+    return isFormValid;
   }
   
   useEffect(() => {
-    validateForm();
+    const valid = validateForm();
+    const playerData = {
+      nombre: name,
+      nivel: level,
+      goles: goals,
+      sueldo: salary,
+      bono: bonus,
+      sueldo_completo: null,
+      equipo: team,
+      uuid,
+      valid
+    };
+    handleCardFormChange(index, playerData);
   }, [name, team, salary, bonus, level, goals]);
-
-  useEffect(() => {
-    console.log('formValid?', formValid);
-    if (formValid) {
-      const playerData = {
-        nombre: name,
-        nivel: level,
-        goles: goals,
-        sueldo: salary,
-        bono: bonus,
-        sueldo_completo: null,
-        equipo: team
-      };
-      handleCardFormChange(playerData);
-    } else {
-      handleCardFormChange(null);
-    }
-  }, [formValid]);
 
   const handleOnChange = ($event) => {
     const inputName = $event.target.name;
@@ -130,11 +122,9 @@ const PlayerInputCard = ({index, handleCardFormChange}) => {
   }
 
   return (
-    <div className="card">
+    <div className="card" style={styles.card}>
       <div className="card-content">
-
         <div className="content">
-
           <div className="columns">
             <div className="column">
               {/* Player Name */}
@@ -259,9 +249,11 @@ const PlayerInputCard = ({index, handleCardFormChange}) => {
             </div>
           </div>
 
-          <button className="button is-danger is-outlined" style={styles.deleteBtn}>
-        
-            <span>Delete {formValid}</span>
+          <button className="button is-danger is-outlined" 
+            style={styles.deleteBtn}
+            onClick={() => handleCardDelete(index)}
+            >
+            <span>Delete</span>
             <span className="icon is-small">
               <i className="fas fa-times"></i>
             </span>
