@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import PlayerInputCard from './PlayerInputCard';
 
-const PlayerInputCards = ({playersData, handleDataChange}) => {
+const PlayerInputCards = ({playersData, handleDataChange, handleSubmit}) => {
   // Sanitize players data with UUID
   let playersInputData = [];
   if (playersData) {
@@ -45,7 +45,11 @@ const PlayerInputCards = ({playersData, handleDataChange}) => {
     setPlayers([...players, {uuid}])
   }
 
-  
+  const handleSubmitClick = () => {
+    if (isFormValid) {
+      handleSubmit();
+    }
+  }
 
   return (
     <Fragment>
@@ -67,7 +71,7 @@ const PlayerInputCards = ({playersData, handleDataChange}) => {
       </button>
       
       <div className="buttons" style={{marginTop: '14px'}}>
-        <button className={`button is-primary`} disabled={!isFormValid}>Submit</button>
+        <button className={`button is-primary`} disabled={!isFormValid} onClick={handleSubmitClick}>Submit</button>
       </div>
     </Fragment>
     

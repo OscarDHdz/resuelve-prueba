@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 
-const RawJsonInput = ({handleDataChange, playersData}) => {
+const RawJsonInput = ({handleDataChange, playersData, handleSubmit}) => {
 
   const [jsonRawVal, setJsonRawVal] = useState(playersData ? JSON.stringify(playersData, undefined, 2) : '');
   const [isSyntaxValid, setIsSyntaxValid] = useState(true); // Needed for textare
@@ -34,6 +34,12 @@ const RawJsonInput = ({handleDataChange, playersData}) => {
     setJsonRawVal(inputVal);
   }
 
+  const handleSubmitClick = () => {
+    if (isJSONValid) {
+      handleSubmit();
+    }
+  }
+
   return (
     <Fragment>
       <div className="field">
@@ -54,7 +60,7 @@ const RawJsonInput = ({handleDataChange, playersData}) => {
           className="button is-light"
           onClick={() => beautifyRawJson()}
           >Beautify</button>
-        <button className={`button is-primary`} disabled={!isJSONValid}>Submit</button>
+        <button className={`button is-primary`} disabled={!isJSONValid} onClick={handleSubmitClick}>Submit</button>
       </div>
     </Fragment>
 
