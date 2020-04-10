@@ -7,8 +7,11 @@ import PlayerCards from '../components/PlayerInputCards';
 const Home = () => {
 
   const [activeTab, setActiveTab] = useState(0);
+  const [playersData, setPlayersData] = useState(null); // Hooks for each input change
+  const [sharedPlayersData, setSharedPlayersData] = useState(null); // Hook to share data across inputs (Without infinite cycle)
 
   const handleTabChange = (tabIndex) => {
+    setSharedPlayersData(playersData);
     setActiveTab(tabIndex);
   }
 
@@ -16,13 +19,13 @@ const Home = () => {
     return tabs[activeTab].component;
   }
 
-  const handleDataChange = (playersData) => {
-    console.log(playersData);
+  const handleDataChange = (data) => {
+    setPlayersData(data);
   }
 
   const tabs = [
-    {label: 'Beauty', component: <PlayerCards/>},
-    {label: 'Raw', component: <RawJsonInput handleDataChange={handleDataChange}/>}
+    {label: 'Beauty', component: <PlayerCards  playersData={sharedPlayersData} handleDataChange={handleDataChange}/>},
+    {label: 'Raw', component: <RawJsonInput playersData={sharedPlayersData} handleDataChange={handleDataChange}/>}
   ];
 
   return (

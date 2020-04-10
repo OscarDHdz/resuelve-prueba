@@ -1,18 +1,17 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 
-const RawJsonInput = ({handleDataChange}) => {
-  handleDataChange = handleDataChange || (() => {})
+const RawJsonInput = ({handleDataChange, playersData}) => {
 
-  const [jsonRawVal, setJsonRawVal] = useState("");
+  const [jsonRawVal, setJsonRawVal] = useState(playersData ? JSON.stringify(playersData, undefined, 2) : '');
   const [isSyntaxValid, setIsSyntaxValid] = useState(true); // Needed for textare
   const [isJSONValid, setIsJSONValid] = useState(false); // Needed it for button
 
   const validateRawJson = (json) => {
     try {
       const obj = JSON.parse(json);
+      handleDataChange(obj);
       setIsSyntaxValid(true);
       setIsJSONValid(true);
-      handleDataChange(obj);
       return true;
     } catch (error) {
       setIsSyntaxValid(false);
@@ -34,7 +33,6 @@ const RawJsonInput = ({handleDataChange}) => {
     validateRawJson(inputVal);
     setJsonRawVal(inputVal);
   }
-
 
   return (
     <Fragment>

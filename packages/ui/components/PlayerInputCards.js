@@ -1,14 +1,37 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import PlayerInputCard from './PlayerInputCard';
 
-const PlayerCards = () => {
+const PlayerInputCards = ({playersData, handleDataChange}) => {
+  // Sanitize players data with UUID
+  let playersInputData = [];
+  if (playersData) {
+    playersInputData = playersData.map((p, index) => {
+      let uuid = new Date().getTime() + index;
+      p.uuid = uuid;
+      return {...p, uuid};
+    })
+  }
+  const [players, setPlayers] = useState(playersInputData);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const [players, setPlayers] = useState([]);
+
+  const validateForm = (formsData) => {
+    let isValid = true;
+    for (const formData of formsData) {
+      if (!formData.valid) {
+        isValid = false;
+        break;
+      }
+    }
+    setIsFormValid(isValid);
+  }
 
   const handleCardFormChange = (index, data) => {
     const updatedPlayers = [...players];
     updatedPlayers[index] = data;
+    validateForm(updatedPlayers);
     setPlayers(updatedPlayers);
+    handleDataChange(updatedPlayers);
   }
 
   const handleCardDelete = (index) => {
@@ -18,10 +41,11 @@ const PlayerCards = () => {
   }
 
   const handlePlayerAdd = () => {
-    // TODO: Change UUID to something different than time
     const uuid = new Date().getTime();
     setPlayers([...players, {uuid}])
   }
+
+  
 
   return (
     <Fragment>
@@ -41,9 +65,13 @@ const PlayerCards = () => {
           <i className="fas fa-plus"></i>
         </span>
       </button>
+      
+      <div className="buttons" style={{marginTop: '14px'}}>
+        <button className={`button is-primary`} disabled={!isFormValid}>Submit</button>
+      </div>
     </Fragment>
     
   )
 }
 
-export default PlayerCards;
+export default PlayerInputCards;

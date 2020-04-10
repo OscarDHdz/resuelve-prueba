@@ -13,23 +13,24 @@ const styles = {
 }
 
 const PlayerInputCard = ({index, data, handleCardFormChange, handleCardDelete}) => {
+
   const [uuid] = useState(data ? data.uuid : '');
-  const [name, setName] = useState(data ? data.name : '');
+  const [name, setName] = useState(data ? data.nombre : '');
   const [nameError, setNameError] = useState(null);
   const [nameDirty, setNameDirty] = useState(false);
-  const [team, setTeam] = useState(data ? data.team : '');
+  const [team, setTeam] = useState(data ? data.equipo : '');
   const [teamError, setTeamError] = useState(null);
   const [teamDirty, setTeamDirty] = useState(false);
-  const [salary, setSalary] = useState(data ? data.salary : '');
+  const [salary, setSalary] = useState(data ? data.sueldo : '');
   const [salaryError, setSalaryError] = useState(null);
   const [salaryDirty, setSalaryDirty] = useState(false);
-  const [bonus, setBonus] = useState(data ? data.bonus : '');
+  const [bonus, setBonus] = useState(data ? data.bono : '');
   const [bonusError, setBonusError] = useState(null);
   const [bonusDirty, setBonusDirty] = useState(false);
-  const [level, setLevel] = useState(data ? data.level : '');
+  const [level, setLevel] = useState(data ? data.nivel : '');
   const [levelError, setLevelError] = useState(null);
   const [levelDirty, setLevelDirty] = useState(false);
-  const [goals, setGoals] = useState(data ? data.goals : '');
+  const [goals, setGoals] = useState(data ? data.goles : '');
   const [goalsError, setGoalsError] = useState(null);
   const [goalsDirty, setGoalsDirty] = useState(false);
 
@@ -119,6 +120,7 @@ const PlayerInputCard = ({index, data, handleCardFormChange, handleCardDelete}) 
         setGoalsDirty(true);
         break;
     }
+
   }
 
   return (
