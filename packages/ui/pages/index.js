@@ -3,6 +3,7 @@ import Tabs from '../components/Tabs';
 import React, { useState } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
 import PlayerCards from '../components/PlayerInputCards';
+import ErrorNotification from '../components/ErrorNotification';
 
 const demoPlayersData = [
   {
@@ -51,7 +52,6 @@ const Home = () => {
   const [requestError, setRequestError] = useState(null);
   const [responseData, setResponseData] = useState(null);
 
-
   const handleTabChange = (tabIndex) => {
     setSharedPlayersData(playersData);
     setActiveTab(tabIndex);
@@ -82,8 +82,8 @@ const Home = () => {
       setRequestError(null);
       setResponseData(data);
     } else {
-      setResponseData(null);
       setRequestError(data);
+      setResponseData(null);
     }
   }
 
@@ -118,11 +118,19 @@ const Home = () => {
             }
           </div>
           <div className="column">
-            <span className="title">Salaries</span>
+            <span className="title">Salaries</span><br/>
 
-            <pre>{JSON.stringify(requestError, undefined, 2)}</pre>
-
-            <pre>{JSON.stringify(responseData, undefined, 2)}</pre>
+            {
+              (requestError === null && responseData === null) ? 
+              <span className="subtitle">Response will show here...</span>
+              : ''
+            }
+            {
+              (requestError !== null) ? <ErrorNotification message={requestError.message}/> : ''
+            }
+            {
+              (responseData !== null) ? <h1>Data here:...</h1> : ''
+            }
 
           </div>
 
