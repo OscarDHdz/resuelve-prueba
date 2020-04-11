@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import MoneyPipe from '../pipes/MoneyPipe';
 
 const PlayerSalaries = ({playersData}) => {
   console.log(playersData);
@@ -17,7 +18,7 @@ const PlayerSalaries = ({playersData}) => {
             playersData.map((p, index) => 
               <tr  key={index}>
                 <td>{p.nombre}</td>
-                <td>{p.sueldo_completo}</td>
+                <td>{MoneyPipe(p.sueldo_completo)}</td>
               </tr>
             )
           }

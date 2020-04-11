@@ -1,6 +1,13 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import PlayerInputCard from './PlayerInputCard';
 
+const styles = {
+  cardsContainer: {
+    maxHeight: '45vh',
+    overflow: 'auto'
+  }
+}
+
 const PlayerInputCards = ({playersData, handleDataChange, handleSubmit}) => {
   // Sanitize players data with UUID
   let playersInputData = [];
@@ -53,16 +60,18 @@ const PlayerInputCards = ({playersData, handleDataChange, handleSubmit}) => {
 
   return (
     <Fragment>
-      {
-        players.map((player, index) => (<PlayerInputCard
-          key={player.uuid}
-          data={player}
-          index={index}
-          handleCardDelete={handleCardDelete}
-          handleCardFormChange={handleCardFormChange}
-          />)
-        )
-      }
+      <div className="cards" style={styles.cardsContainer}>
+        {
+          players.map((player, index) => (<PlayerInputCard
+            key={player.uuid}
+            data={player}
+            index={index}
+            handleCardDelete={handleCardDelete}
+            handleCardFormChange={handleCardFormChange}
+            />)
+          )
+        }
+      </div>
       <button className="button is-primary is-outlined is-fullwidth" onClick={handlePlayerAdd}>
         <span>Add Player</span>
         <span className="icon is-small">

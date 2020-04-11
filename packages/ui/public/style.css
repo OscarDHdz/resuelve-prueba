@@ -1,3 +1,12 @@
 textarea {
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
+
+td, th {
+  padding: 14px !important;
+}
+
+td:nth-child(2),
+th:nth-child(2)  {
+  text-align: right !important;
+}
