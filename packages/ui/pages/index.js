@@ -2,8 +2,9 @@ import Layout from '../components/Layout';
 import Tabs from '../components/Tabs';
 import React, { useState } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
-import PlayerCards from '../components/PlayerInputCards';
+import PlayerInputCards from '../components/PlayerInputCards';
 import ErrorNotification from '../components/ErrorNotification';
+import PlayerSalaries from '../components/PlayerSalaries';
 
 const demoPlayersData = [
   {
@@ -88,12 +89,11 @@ const Home = () => {
   }
 
   const handleSubmit = () => {
-    console.log('Submit!:', playersData);
     getSalaries(playersData);
   }
 
   const tabs = [
-    {label: 'Beauty', component: <PlayerCards  playersData={sharedPlayersData} handleDataChange={handleDataChange} handleSubmit={handleSubmit}/>},
+    {label: 'Beauty', component: <PlayerInputCards  playersData={sharedPlayersData} handleDataChange={handleDataChange} handleSubmit={handleSubmit}/>},
     {label: 'Raw', component: <RawJsonInput playersData={sharedPlayersData} handleDataChange={handleDataChange} handleSubmit={handleSubmit}/>}
   ];
 
@@ -129,7 +129,7 @@ const Home = () => {
               (requestError !== null) ? <ErrorNotification message={requestError.message}/> : ''
             }
             {
-              (responseData !== null) ? <h1>Data here:...</h1> : ''
+              (responseData !== null) ? <PlayerSalaries playersData={responseData}/> : ''
             }
 
           </div>
