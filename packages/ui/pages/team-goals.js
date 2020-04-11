@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
 import Tabs from '../components/Tabs';
 import TeamGoalsCard from '../components/TeamGoalsCard';
+import TeamGoalsModalForm from '../components/TeamGoalsModalForm';
 
 const TeamGoals = () => {
 
   const [goalsData, setGoalsData] = useState([]);
   const [dataReload, setDataReload] = useState(true);
+  const [showModal, setShowModal] = useState(true);
 
   // Get Teams Goals from service
   useEffect(() => {
@@ -32,43 +34,56 @@ const TeamGoals = () => {
     }
   }, [dataReload])
 
-  const handleDataChange = () => {
-
+  const handleModalToggle = (openModal) => {
+    setShowModal(openModal);
   }
 
-  const handleSubmit = () => {
-
+  // After success, modal gets closed & data refreshed
+  const handleSubmitSuccess = () => {
+    setShowModal(false);
+    setDataReload(true);
   }
 
   return (
-    <div className="container">
-      <div className="level">
-        <div className="level-left">
-          <h1 className="title">Team Goals</h1>
-        </div>
-        <div className="level-right">
-          <button className="button is-primary is-right">
-            <span className="icon is-small">
-              <i className="fas fa-plus"></i>
-            </span>
-          </button>
-        </div>
-      </div>
-      <hr/>
-
-      <div className="columns">
-        {
-          goalsData.map((tg) => 
-          <div className="column is-half">
-            <TeamGoalsCard
-              key={tg.equipo}
-              data={tg}
-            />
+    <Fragment>
+      <div className="container">
+        <div className="level">
+          <div className="level-left">
+            <h1 className="title">Team Goals</h1>
           </div>
-          )
-        }
+          <div className="level-right">
+            <button className="button is-primary is-right" onClick={() => handleModalToggle(true)}>
+              <span className="icon is-small">
+                <i className="fas fa-plus"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+        <hr/>
+  
+        <div className="columns">
+          {
+            goalsData.map((tg) => 
+            <div className="column is-half">
+              <TeamGoalsCard
+                key={tg.equipo}
+                data={tg}
+              />
+            </div>
+            )
+          }
+        </div>
       </div>
-    </div>
+  
+      {
+        showModal ?
+        <TeamGoalsModalForm
+          handleModalToggle={handleModalToggle}
+          handleSubmitSuccess={handleSubmitSuccess}
+        /> : ''
+      }
+      
+    </Fragment>
   )
 }
 

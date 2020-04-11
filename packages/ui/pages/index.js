@@ -1,4 +1,3 @@
-import Layout from '../components/Layout';
 import Tabs from '../components/Tabs';
 import React, { useState, Fragment } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
