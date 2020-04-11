@@ -1,8 +1,8 @@
 import React, {Fragment, useState, useEffect} from 'react';
 
-const RawJsonInput = ({handleDataChange, playersData, handleSubmit}) => {
+const RawJsonInput = ({handleDataChange, data, handleSubmit}) => {
 
-  const [jsonRawVal, setJsonRawVal] = useState(playersData ? JSON.stringify(playersData, undefined, 2) : '');
+  const [jsonRawVal, setJsonRawVal] = useState(data ? JSON.stringify(data, undefined, 2) : '');
   const [isSyntaxValid, setIsSyntaxValid] = useState(true); // Needed for textare
   const [isJSONValid, setIsJSONValid] = useState(false); // Needed it for button
 

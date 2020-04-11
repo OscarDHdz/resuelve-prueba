@@ -1,6 +1,6 @@
 import Layout from '../components/Layout';
 import Tabs from '../components/Tabs';
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
 import PlayerInputCards from '../components/PlayerInputCards';
 import ErrorNotification from '../components/ErrorNotification';
@@ -63,7 +63,6 @@ const Home = () => {
   }
 
   const handleDataChange = (data) => {
-    console.log('Final players Data:', data);
     setPlayersData(data);
   }
 
@@ -76,8 +75,6 @@ const Home = () => {
         'x-auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoicHVibGljIiwiYWNjZXNzIjoiYXV0aCIsImlhdCI6MTU4NTYyMTE2OH0.E2VrMpdQQR2lwqFlm7pwPuwH0-MXOskElDXzZLmqAic'
       },
     });
-
-    console.log(response);
     const data = await response.json();
     if (response.ok) {
       setRequestError(null);
@@ -99,8 +96,8 @@ const Home = () => {
 
 
   return (
-    <Layout>
-      <div className="container" style={{marginTop: '21px'}}>
+    <Fragment>
+      <div className="container">
         <h1 className="title">Salary Calculator</h1>
         <h2 className="subtitle">Please fill players data and then click on submit to continue</h2>
 
@@ -137,7 +134,7 @@ const Home = () => {
         </div>
 
       </div>
-    </Layout>
+    </Fragment>
   )
 }
 
