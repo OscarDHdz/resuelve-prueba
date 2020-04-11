@@ -251,21 +251,21 @@ const PlayerInputCard = ({index, data, handleCardFormChange, handleCardDelete}) 
             </div>
           </div>
 
-          <button className="button is-danger is-outlined" 
-            style={styles.deleteBtn}
-            onClick={() => handleCardDelete(index)}
-            >
-            <span>Delete</span>
-            <span className="icon is-small">
-              <i className="fas fa-times"></i>
-            </span>
-          </button>
-
         </div>
-
-
-
       </div>
+
+      <footer className="card-footer">
+        <p className="card-footer-item"></p>
+        <p className="card-footer-item">
+          <button class="button is-white card-delete-btn"
+            onClick={() => handleCardDelete(index)}>
+          <span>DELETE</span>
+          <span className="icon is-small">
+            <i className="fas fa-trash"></i>
+          </span>
+          </button>
+        </p>
+      </footer>
     </div>
   )
 }

@@ -2,15 +2,24 @@ textarea {
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
 
-td, th {
-  padding: 14px !important;
-}
 
 .container {
   margin-top: 14px;
 }
 
+.table-salary td, 
+.table-salary th {
+  padding: 14px !important;
+}
 td:nth-child(2),
 th:nth-child(2)  {
   text-align: right !important;
+}
+
+.card-delete-btn {
+  color: #ad0000 !important;
+}
+
+.card-footer-item {
+  padding: .25rem !important;
 }

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import RawJsonInput from '../components/RawJsonInput';
 import Tabs from '../components/Tabs';
+import TeamGoalsCard from '../components/TeamGoalsCard';
 
 const TeamGoals = () => {
 
-  const [goalsData, setGoalsData] = useState(null);
+  const [goalsData, setGoalsData] = useState([]);
   const [dataReload, setDataReload] = useState(true);
 
   // Get Teams Goals from service
@@ -39,11 +40,34 @@ const TeamGoals = () => {
 
   }
 
-
   return (
     <div className="container">
-      <h1 className="title">Team Goals</h1>
-      <h2 className="subtitle">Please set goals per team to calculate players salaries</h2>
+      <div className="level">
+        <div className="level-left">
+          <h1 className="title">Team Goals</h1>
+        </div>
+        <div className="level-right">
+          <button className="button is-primary is-right">
+            <span className="icon is-small">
+              <i className="fas fa-plus"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <hr/>
+
+      <div className="columns">
+        {
+          goalsData.map((tg) => 
+          <div className="column is-half">
+            <TeamGoalsCard
+              key={tg.equipo}
+              data={tg}
+            />
+          </div>
+          )
+        }
+      </div>
     </div>
   )
 }

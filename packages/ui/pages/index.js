@@ -98,12 +98,12 @@ const Home = () => {
   return (
     <Fragment>
       <div className="container">
-        <h1 className="title">Salary Calculator</h1>
-        <h2 className="subtitle">Please fill players data and then click on submit to continue</h2>
 
         <div className="columns">
 
           <div className="column">
+            <h1 className="title">Salary Calculator</h1>
+            <h2 className="subtitle">Fill players data and then click on submit to continue</h2>
             <Tabs
               onTabChange={handleTabChange}
               tabs={tabs}

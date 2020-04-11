@@ -6,7 +6,7 @@ const PlayerSalaries = ({playersData}) => {
 
   return (
     <Fragment>
-      <table className="table is-striped is-fullwidth">
+      <table className="table .table-salary is-striped is-fullwidth">
         <thead>
           <tr>
             <th>Name</th>
