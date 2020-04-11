@@ -5,14 +5,7 @@ import Tabs from '../components/Tabs';
 const TeamGoals = () => {
 
   const [goalsData, setGoalsData] = useState(null);
-  const [sharedGoalsData, setSharedGoalsData] = useState(null); // Hook to share data across inputs (Without infinite cycle)
   const [dataReload, setDataReload] = useState(true);
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleTabChange = (tabIndex) => {
-    setSharedGoalsData(goalsData);
-    setActiveTab(tabIndex);
-  }
 
   // Get Teams Goals from service
   useEffect(() => {
@@ -46,29 +39,11 @@ const TeamGoals = () => {
 
   }
 
-  const getCurrentInputComponent = () => {
-    return tabs[activeTab].component;
-  }
-
-  const tabs = [
-    {label: 'Beauty', component: <h1>Test</h1>},
-    {label: 'Raw', component: <RawJsonInput data={sharedGoalsData} handleDataChange={handleDataChange} handleSubmit={handleSubmit}/>}
-  ];
-
 
   return (
     <div className="container">
       <h1 className="title">Team Goals</h1>
-      <h2 className="subtitle">Please set goals per team to calculater players salaries</h2>
-
-      <Tabs
-        onTabChange={handleTabChange}
-        tabs={tabs}
-        initialTab={activeTab}
-        />
-      {
-        getCurrentInputComponent()
-      }
+      <h2 className="subtitle">Please set goals per team to calculate players salaries</h2>
     </div>
   )
 }
