@@ -6,49 +6,10 @@ import PlayerInputCards from '../components/PlayerInputCards';
 import ErrorNotification from '../components/ErrorNotification';
 import PlayerSalaries from '../components/PlayerSalaries';
 
-const demoPlayersData = [
-  {
-      "nombre": "Juan",
-      "nivel": "A",
-      "goles": 6,
-      "sueldo": 25000,
-      "bono": 10000,
-      "sueldo_completo": 35800,
-      "equipo": "rojo"
-  },
-  {
-      "nombre": "Pedro",
-      "nivel": "B",
-      "goles": 7,
-      "sueldo": 30000,
-      "bono": 15000,
-      "sueldo_completo": 42450,
-      "equipo": "rojo"
-  },
-  {
-      "nombre": "Martin",
-      "nivel": "C",
-      "goles": 16,
-      "sueldo": 30000,
-      "bono": 15000,
-      "sueldo_completo": 45200,
-      "equipo": "rojo"
-  },
-  {
-      "nombre": "Luis",
-      "nivel": "Cuauh",
-      "goles": 19,
-      "sueldo": 50000,
-      "bono": 10000,
-      "sueldo_completo": 59550,
-      "equipo": "rojo"
-  }
-]
-
 const Home = () => {
 
   const [activeTab, setActiveTab] = useState(0);
-  const [playersData, setPlayersData] = useState(demoPlayersData); // Hooks for each input change
+  const [playersData, setPlayersData] = useState([]); // Hooks for each input change
   const [sharedPlayersData, setSharedPlayersData] = useState(null); // Hook to share data across inputs (Without infinite cycle)
   const [requestError, setRequestError] = useState(null);
   const [responseData, setResponseData] = useState(null);
