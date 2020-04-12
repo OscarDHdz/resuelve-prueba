@@ -19,7 +19,6 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
   // Form hooks
   const [teamName, setTeamName] = useState(data ? data.equipo : '');
   const [teamGoals, setTeamGoals] = useState(data ? data.metas : []);
-  const [c_teamGoals, c_setTeamGoals] = useState(data ? data.metas : []); // Cached(c_) teamGoals, to avoid cycle
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -51,23 +50,23 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
   }
 
   const handleAddTeamGoal = () => {
-    const updatedTeamGoals = [...c_teamGoals];
+    const updatedTeamGoals = [...teamGoals];
     const uuid = new Date().getTime();
     updatedTeamGoals.push({nivel: '', goles_minimos: '', uuid});
     setTeamGoals(updatedTeamGoals);
   }
 
   const handleDeleteTeamGoal = (index) => {
-    c_teamGoals.splice(index, 1);
-    const updatedTeamGoals = [...c_teamGoals];
+    teamGoals.splice(index, 1);
+    const updatedTeamGoals = [...teamGoals];
     setTeamGoals(updatedTeamGoals);
     console.log('Updated team goals:', updatedTeamGoals)
   }
 
   const handleOnTeamGoalChange = (index, teamGoalData) => {
-    const updatedTeamGoals = [...c_teamGoals];
+    const updatedTeamGoals = [...teamGoals];
     updatedTeamGoals[index] = {...teamGoalData};
-    c_setTeamGoals(updatedTeamGoals);
+    setTeamGoals(updatedTeamGoals);
     console.log('Updated Goals', updatedTeamGoals)
   }
 

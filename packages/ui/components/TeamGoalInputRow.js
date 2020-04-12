@@ -5,17 +5,23 @@ const TeamGoalInputRow = ({index, data, handleDelete, handleOnChange}) => {
   const [uuid] = useState(data ? data.uuid : new Date().getTime());
   const [level, setLevel] = useState(data ? data.nivel : '');
   const [minGoals, setMinGoals] = useState(data ? data.goles_minimos : '');
+  const [didMount, setDidMount] = useState(false);
 
-  console.log('Input Row Data:', data)
+  console.log('Input Row Data:', data);
+
+  useEffect(() => setDidMount(true), []);
 
   useEffect(() => {
-    const inputData = {
-      nivel: level,
-      goles_minimos: minGoals,
-      uuid: uuid
-    };
-
-    handleOnChange(index, inputData);
+    // Only toggle change when component has mounted (avoid loop)
+    if (didMount) {
+      const inputData = {
+        nivel: level,
+        goles_minimos: minGoals,
+        uuid: uuid
+      };
+  
+      handleOnChange(index, inputData);
+    }
 
   }, [level, minGoals]);
 
