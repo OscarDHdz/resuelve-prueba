@@ -8,6 +8,7 @@
  */
 import React, { useState } from 'react';
 import ErrorNotification from './ErrorNotification';
+import TeamGoalInputRow from './TeamGoalInputRow';
 
 const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSuccess}) => {
 
@@ -15,6 +16,10 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
   const [isVisible] = useState(isActive === undefined ? true : isActive); // Visible by default
   const [isLoading, setIsLoading] = useState(false);
   const [requestError, setRequestError] = useState(null);
+  // Form hooks
+  const [teamName, setTeamName] = useState(data ? data.equipo : '');
+  const [teamGoals, setTeamGoals] = useState(data ? data.metas : []);
+  const [c_teamGoals, c_setTeamGoals] = useState(data ? data.metas : []); // Cached(c_) teamGoals, to avoid cycle
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -45,6 +50,27 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
 
   }
 
+  const handleAddTeamGoal = () => {
+    const updatedTeamGoals = [...c_teamGoals];
+    const uuid = new Date().getTime();
+    updatedTeamGoals.push({nivel: '', goles_minimos: '', uuid});
+    setTeamGoals(updatedTeamGoals);
+  }
+
+  const handleDeleteTeamGoal = (index) => {
+    c_teamGoals.splice(index, 1);
+    const updatedTeamGoals = [...c_teamGoals];
+    setTeamGoals(updatedTeamGoals);
+    console.log('Updated team goals:', updatedTeamGoals)
+  }
+
+  const handleOnTeamGoalChange = (index, teamGoalData) => {
+    const updatedTeamGoals = [...c_teamGoals];
+    updatedTeamGoals[index] = {...teamGoalData};
+    c_setTeamGoals(updatedTeamGoals);
+    console.log('Updated Goals', updatedTeamGoals)
+  }
+
   return (
     <div className={`modal ${isVisible ? 'is-active' : ''}`}>
       <div className="modal-background"></div>
@@ -55,9 +81,51 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
         </header>
         <section className="modal-card-body">
 
+        <div className="columns">
+            <div className="column">
+              {/* Team Name */}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Team Name</label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <p className="control">
+                      <input className={`input ${false && true ? 'is-danger' : ''}`} 
+                        name="teamName"
+                        value={teamName} onChange={($event) => setTeamName($event.target.value)}
+                        type="text" placeholder="Team's name"/>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {
+            teamGoals.map((tg, index) => 
+              <TeamGoalInputRow
+                key={tg.uuid}
+                index={index}
+                data={tg}
+                handleDelete={handleDeleteTeamGoal}
+                handleOnChange={handleOnTeamGoalChange}
+              />
+            )
+          }
+
+          <button className="button is-primary is-outlined is-fullwidth"
+            onClick={handleAddTeamGoal}>
+            <span>Add Level Goal</span>
+            <span className="icon is-small">
+              <i className="fas fa-plus"></i>
+            </span>
+          </button>
+
           {
             requestError ? <ErrorNotification message={requestError.message}/> : ''
           }
+          
           
 
         </section>
