@@ -5,7 +5,6 @@ import TeamGoalsCard from '../components/TeamGoalsCard';
 import TeamGoalsModalForm from '../components/TeamGoalsModalForm';
 
 const TeamGoals = () => {
-
   const [goalsData, setGoalsData] = useState([]);
   const [dataReload, setDataReload] = useState(true);
   const [showModal, setShowModal] = useState(true);

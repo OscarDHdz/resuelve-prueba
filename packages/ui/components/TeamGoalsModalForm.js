@@ -6,7 +6,7 @@
  * This helps with the state clean up (Each time it is shown, all states init again)
  * but if needed to preserve the modal state, you can use it's own 'isVisible" hook
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ErrorNotification from './ErrorNotification';
 import TeamGoalInputRow from './TeamGoalInputRow';
 
@@ -19,11 +19,15 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
   // Form hooks
   const [teamName, setTeamName] = useState(data ? data.equipo : '');
   const [teamGoals, setTeamGoals] = useState(data ? data.metas : []);
+  const [isValid, setIsValid] = useState(false);
 
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    const payload = {};
+    const payload = {
+      equipo: teamName,
+      metas: teamGoals
+    };
 
     const method = mode === 'add' ? 'POST' : 'PUT';
     const resource = mode === 'add' ? '' : `/${data.equipo}`;
@@ -60,15 +64,25 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
     teamGoals.splice(index, 1);
     const updatedTeamGoals = [...teamGoals];
     setTeamGoals(updatedTeamGoals);
-    console.log('Updated team goals:', updatedTeamGoals)
   }
 
   const handleOnTeamGoalChange = (index, teamGoalData) => {
     const updatedTeamGoals = [...teamGoals];
     updatedTeamGoals[index] = {...teamGoalData};
     setTeamGoals(updatedTeamGoals);
-    console.log('Updated Goals', updatedTeamGoals)
   }
+
+  const validateForm = () => {
+    let isFormValid = true;
+    if (!teamName) isFormValid = false;
+    if (!teamGoals || teamGoals.length === 0) isFormValid = false
+    return isFormValid;
+  }
+
+  useEffect(() => {
+    const isFormValid = validateForm();    
+    setIsValid(isFormValid);
+  }, [teamName, teamGoals]);
 
   return (
     <div className={`modal ${isVisible ? 'is-active' : ''}`}>
@@ -131,7 +145,9 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
         <footer className="modal-card-foot">
           <button 
             className={`button is-primary ${isLoading ? 'is-loading':''}`}
-            onClick={handleSubmit}>
+            onClick={handleSubmit}
+            disabled={!isValid}
+            >
               Save changes
           </button>
           <button className="button" onClick={() => handleModalToggle(false)}>Cancel</button>

@@ -57,7 +57,7 @@ const TeamGoalInputRow = ({index, data, handleDelete, handleOnChange}) => {
               <p className="control">
                 <input className={`input ${false && true ? 'is-danger' : ''}`} 
                   name="minimun_goals"
-                  value={minGoals} onChange={($event) => setMinGoals($event.target.value)}
+                  value={minGoals} onChange={($event) => setMinGoals(+$event.target.value)}
                   type="number" placeholder="Level"/>
               </p>
             </div>
