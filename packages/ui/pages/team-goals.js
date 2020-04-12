@@ -7,7 +7,8 @@ import TeamGoalsModalForm from '../components/TeamGoalsModalForm';
 const TeamGoals = () => {
   const [goalsData, setGoalsData] = useState([]);
   const [dataReload, setDataReload] = useState(true);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   // Get Teams Goals from service
   useEffect(() => {
@@ -39,8 +40,14 @@ const TeamGoals = () => {
 
   // After success, modal gets closed & data refreshed
   const handleSubmitSuccess = () => {
+    setEditData(null);
     setShowModal(false);
     setDataReload(true);
+  }
+
+  const handleCardEdit = (dataToEdit) => {
+    setEditData(dataToEdit);
+    setShowModal(true);
   }
 
   return (
@@ -67,6 +74,7 @@ const TeamGoals = () => {
               <TeamGoalsCard
                 key={tg.equipo}
                 data={tg}
+                handleOnEditClick={() => handleCardEdit(tg)}
               />
             </div>
             )
@@ -77,6 +85,7 @@ const TeamGoals = () => {
       {
         showModal ?
         <TeamGoalsModalForm
+          data={editData}
           handleModalToggle={handleModalToggle}
           handleSubmitSuccess={handleSubmitSuccess}
         /> : ''

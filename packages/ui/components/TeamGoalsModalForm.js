@@ -24,13 +24,19 @@ const TeamGoalsModalForm = ({data, isActive, handleModalToggle, handleSubmitSucc
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    const payload = {
-      equipo: teamName,
-      metas: teamGoals
-    };
-
-    const method = mode === 'add' ? 'POST' : 'PUT';
-    const resource = mode === 'add' ? '' : `/${data.equipo}`;
+    let payload, method, resource;
+    if (mode === 'add') {
+      method = 'POST';
+      resource = '';
+      payload = {
+        equipo: teamName,
+        metas: teamGoals
+      };
+    } else {
+      method = 'PUT';
+      resource = `/${data.equipo}`;
+      payload = teamGoals
+    }
 
     const response = await fetch(`http://localhost:3000/_api/v1/team-goals${resource}`, {
       method,

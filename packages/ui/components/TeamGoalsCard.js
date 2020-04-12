@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TeamGoalsCard = ({data}) => {
+const TeamGoalsCard = ({data, handleOnEditClick}) => {
 
   return (
     <div className="card">
@@ -38,7 +38,7 @@ const TeamGoalsCard = ({data}) => {
           </button>
         </p>
         <p className="card-footer-item">
-          <button className="button is-white">
+          <button className="button is-white" onClick={handleOnEditClick}>
           <span>EDIT</span>
           <span className="icon is-small">
             <i className="fas fa-wrench"></i>
