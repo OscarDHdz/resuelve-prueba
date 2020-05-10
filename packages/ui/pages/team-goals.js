@@ -67,19 +67,19 @@ const TeamGoals = () => {
         </div>
         <hr/>
   
-        <div className="columns">
           {
             goalsData.map((tg) => 
-            <div className="column is-half">
-              <TeamGoalsCard
-                key={tg.equipo}
-                data={tg}
-                handleOnEditClick={() => handleCardEdit(tg)}
-              />
-            </div>
+              <div className="columns">
+                <div className="column">
+                  <TeamGoalsCard
+                    key={tg.equipo}
+                    data={tg}
+                    handleOnEditClick={() => handleCardEdit(tg)}
+                  />
+                </div>
+              </div>
             )
           }
-        </div>
       </div>
   
       {
